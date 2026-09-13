@@ -119,11 +119,11 @@ def build_app(title: str, on_startup: Sequence[Callable[[], Awaitable[None]]] = 
     app = FastAPI(title=title, version="0.1.0", lifespan=_lifespan(on_startup))
     app.add_middleware(
         TrustedHostMiddleware,
-        allowed_hosts=["localhost", "127.0.0.1", *(host for host in extra_hosts if host)],
+        allowed_hosts=["*"],
     )
     app.add_middleware(
         CORSMiddleware,
-        allow_origin_regex=r"http://(localhost|127\.0\.0\.1):\d+",
+        allow_origin_regex=r"https?://(localhost|127\.0\.0\.1):\d+|https://.*\.app\.github\.dev",
         allow_methods=["*"],
         allow_headers=["*"],
     )

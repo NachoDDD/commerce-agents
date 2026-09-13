@@ -186,7 +186,7 @@ def start_api(vertical: str, port: int, federated: bool) -> subprocess.Popen:
 
 
 def start_web(app_dir: Path, port: int, api_port: int, prod: bool) -> subprocess.Popen:
-    env = {**os.environ, "NEXT_PUBLIC_API_URL": f"http://localhost:{api_port}"}
+    env = {"NEXT_PUBLIC_API_URL": f"http://localhost:{api_port}", **os.environ}
     if prod:
         subprocess.run([str(NEXT), "build"], cwd=app_dir, check=True, env=env)
     return spawn([str(NEXT), "start" if prod else "dev", "--port", str(port)], app_dir, env)
