@@ -1,8 +1,9 @@
 # commerce-agents
 
-For agents working in this repo, commerce-builder plugin users included. The public
-reference for commerce agents on Claude: a shopping agent and a merchant agent on three
-paths each, four vertical examples, and a Claude Code plugin.
+This fork adapts the merchant agent for Spotlight Retail Group's Mirakl dropship
+marketplace, scoped to the Spotlight AU banner only. Users are category buyers. Primary
+use cases: sales and performance Q&A, and identifying underperforming products for
+repricing. Upstream is anthropics/commerce-agents.
 
 ## Layout
 
@@ -31,14 +32,32 @@ adds pytest and ruff); `scripts/install.sh` runs it.
 - Core is domain-neutral; a vertical adds UI through `PresentationExtension` and keeps the rest to itself.
 - Each mechanism is defined once, in `commerce_common` or a role core, and shared by all three paths.
 
-## Fictional and original
+## Real data
 
-No real company, brand, product, or person appears: the only company is ACME and its
-lines; every brand, prompt, schema, and figure is invented here. Two exceptions:
-deployment and integration targets (the README's "MCP connectors" section; platform and
-SDK names in `docs/deployment.md`, the README's deploying section, and the platform tests),
-and CC0 category photos listed in the `IMAGE-CREDITS.md` beside them. When in doubt,
-redesign rather than rename.
+This fork intentionally uses real SRG brand, supplier and product references — the
+upstream fictional-only rule does not apply to additions made here. Examples under
+examples/ stay fictional and untouched. Development data is scrambled: real schema and
+real identifier formats, fake values.
+
+## Environments
+
+Development runs in a GitHub Codespace against the direct Anthropic API with scrambled
+data. Production will run as an Azure Container App with Claude reached via Microsoft
+Foundry against live data. Model endpoint, authentication, data source and hosting
+configuration must always come from environment variables. Never hardcode them —
+promoting to Foundry has to be a configuration change, not a code change.
+
+## Working rules
+
+Prefer editing definition files — skills, config, guardrails — over writing Python. If a
+change requires a new Python module, explain why before writing it. One working change
+per commit, with messages explaining why rather than what. Show me the diff before
+committing. Ask before adding any dependency.
+
+## Decisions
+
+Settled decisions live in DECISIONS.md. Read it before proposing any design. Treat
+entries there as inputs, not starting positions.
 
 ## Conventions
 
